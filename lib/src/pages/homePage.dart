@@ -27,12 +27,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    double tamAltura = size.height;
     return Scaffold(
       body: SizedBox(
         height: size.height,
         width: size.width,
         child: Stack(
           children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: tamAltura * 0.15,
+              ),
+              child: StreamBuilder(
+                  stream: _publicacionesStream.noticiasStream,
+                  builder: (context, AsyncSnapshot<List<NoticiasModel>> snap) {
+                    if (!snap.hasData)
+                      return Center(
+                          child: Container(child: CircularProgressIndicator()));
+                    List<NoticiasModel> lista = snap.data;
+                    return ListView.builder(
+                        itemCount: lista.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          print(lista[i].titulo);
+                          NewsAppear news = NewsAppear();
+
+                          return GestureDetector(
+                            onTap: () => _detalles(context, lista[i]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: news.newsBox(context, lista[i]),
+                            ),
+                          );
+                        });
+                  }),
+            ),
             Positioned(
               left: 30,
               top: -size.height * 0.55,
@@ -67,33 +95,43 @@ class _HomePageState extends State<HomePage> {
                           style:
                               GoogleFonts.galada(fontSize: size.width * 0.15)),
                     ),
-                    Expanded(
-                      //padding: EdgeInsets.only(top: 10, bottom: 15),
-                      child: StreamBuilder(
-                          stream: _publicacionesStream.noticiasStream,
-                          builder: (context,
-                              AsyncSnapshot<List<NoticiasModel>> snap) {
-                            if (!snap.hasData)
-                              return CircularProgressIndicator();
-                            List<NoticiasModel> lista = snap.data;
-                            return ListView.builder(
-                                itemCount: lista.length,
-                                itemBuilder: (BuildContext context, int i) {
-                                  print(lista[i].titulo);
-                                  NewsAppear news = NewsAppear();
-
-                                  return Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: news.newsBox(context, lista[i]),
-                                  );
-                                });
-                          }),
-                    )
                   ]),
             )
           ],
         ),
       ),
     );
+  }
+
+  void _detalles(BuildContext context, NoticiasModel _noticiasModel) {
+    final size = MediaQuery.of(context).size;
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+              title: Text(_noticiasModel.titulo),
+              content: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      _noticiasModel.contenido,
+                      style: TextStyle(color: Colors.black54),
+                    ),
+                    if (_noticiasModel.fotoStatus) ...[
+                      FadeInImage(
+                        height: size.height * 0.5,
+                        width: size.width * 0.9,
+                        placeholder:
+                            AssetImage('assets/loading/progress_icon.gif'),
+                        image: NetworkImage(
+                            'http://concoapps.000webhostapp.com/' +
+                                _noticiasModel.fotoUrl),
+                        fit: BoxFit.scaleDown,
+                      )
+                    ]
+                  ],
+                ),
+              ));
+        });
   }
 }

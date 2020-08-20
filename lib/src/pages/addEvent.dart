@@ -55,8 +55,8 @@ class _AddEventPageState extends State<AddEventPage> {
           IconButton(
               icon: Icon(Icons.camera_alt),
               onPressed: () async {
-                final _foto =
-                    await _picker.getImage(source: ImageSource.camera);
+                final _foto = await _picker.getImage(
+                    source: ImageSource.camera, imageQuality: 40);
                 _image = File(_foto.path);
                 setState(() {});
               })

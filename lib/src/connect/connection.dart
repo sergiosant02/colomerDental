@@ -76,7 +76,18 @@ class PublicacionesProvider {
     final _url = 'http://$_urlRed/addNew.php';
     try {
       print('proceso carga noticia');
-      await http.post(_url, body: _noticia.toJson());
+      print(_noticia.titulo);
+      print(_noticia.contenido);
+      print(_noticia.fotoStatus);
+      print(_noticia.fotoUrl);
+      print(_noticia.fecha);
+      await http.post(_url, body: {
+        'titulo': _noticia.titulo,
+        'contenido': _noticia.contenido,
+        'fotoStatus': _noticia.fotoStatus ? '1' : '0',
+        'fotoUrl': _noticia.fotoUrl,
+        'fecha': _noticia.fecha
+      });
     } catch (e) {
       print('error!!!');
       print(e);

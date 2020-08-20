@@ -14,7 +14,7 @@ class NoticiasModel {
     this.titulo,
     this.contenido,
     this.fotoStatus,
-    this.fotoUrl,
+    this.fotoUrl = '',
     this.fecha,
   });
 
@@ -27,7 +27,7 @@ class NoticiasModel {
   factory NoticiasModel.fromJson(Map<String, dynamic> json) => NoticiasModel(
         titulo: json["titulo"],
         contenido: json["contenido"],
-        fotoStatus: json["fotoStatus"] == 1 ? true : false,
+        fotoStatus: json["fotoStatus"] == '1' ? true : false,
         fotoUrl: (json["fotoUrl"]),
         fecha: json["fecha"],
       );
@@ -35,7 +35,7 @@ class NoticiasModel {
   Map<String, dynamic> toJson() => {
         "titulo": titulo,
         "contenido": contenido,
-        "fotoStatus": fotoStatus == true ? 1 : 0,
+        "fotoStatus": fotoStatus == true ? '1' : '0',
         "fotoUrl": fotoUrl,
         "fecha": fecha,
       };
