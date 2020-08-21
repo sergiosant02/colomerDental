@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:colomer_dental/src/models/clinicasModel.dart';
 import 'package:colomer_dental/src/models/noticiasModel.dart';
 import 'package:colomer_dental/src/models/userModel.dart';
 import 'package:http/http.dart' as http;
@@ -92,5 +93,20 @@ class PublicacionesProvider {
       print('error!!!');
       print(e);
     }
+  }
+}
+
+class ClinicasProvider {
+  final String _urlRed = 'concoapps.000webhostapp.com';
+
+  Future<List<Clinicas>> getClinicas() async {
+    List<Clinicas> clinicasLista = [];
+    final _url = 'http://$_urlRed/getClinicas.php';
+    final res = await http.get(_url);
+    final decode = json.decode(res.body);
+    for (var i in decode) {
+      clinicasLista.add(Clinicas.fromJson(i));
+    }
+    return clinicasLista;
   }
 }

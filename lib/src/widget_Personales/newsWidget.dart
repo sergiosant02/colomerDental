@@ -50,7 +50,7 @@ class NewsAppear {
               image: NetworkImage('http://concoapps.000webhostapp.com/' +
                   _noticiasModel.fotoUrl),
               width: double.infinity,
-              height: 300,
+              height: size.height * 0.25,
               fit: BoxFit.cover,
             ),
           )

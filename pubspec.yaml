@@ -33,6 +33,7 @@ dependencies:
   shared_preferences:
   rxdart: ^0.22.2
   image_picker:
+  direct_select: ^1.0.2+1
 
 dev_dependencies:
   flutter_test:
