@@ -94,6 +94,26 @@ class PublicacionesProvider {
       print(e);
     }
   }
+
+  Future<void> deleteNew(NoticiasModel _noticia) async {
+    final _url = 'http://$_urlRed/borrarNew.php';
+    try {
+      await http.post(_url, body: {'id': _noticia.id});
+    } catch (e) {
+      print('error!!!');
+      print(e);
+    }
+  }
+
+  Future<void> deleteFoto(NoticiasModel _noticia) async {
+    final _url = 'http://$_urlRed/eliminarFoto.php';
+    try {
+      await http.post(_url, body: {'nameImage': _noticia.fotoUrl});
+    } catch (e) {
+      print('error!!!');
+      print(e);
+    }
+  }
 }
 
 class ClinicasProvider {
@@ -106,6 +126,7 @@ class ClinicasProvider {
     final decode = json.decode(res.body);
     for (var i in decode) {
       clinicasLista.add(Clinicas.fromJson(i));
+      print(Clinicas.fromJson(i).direccion);
     }
     return clinicasLista;
   }

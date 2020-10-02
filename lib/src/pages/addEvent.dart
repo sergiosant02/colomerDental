@@ -50,20 +50,51 @@ class _AddEventPageState extends State<AddEventPage> {
             }
           }),
       appBar: AppBar(
+        //elevation: 0,
+        backgroundColor: Colors.blue[600],
         title: Text('Añadir un evento'),
         actions: [
           IconButton(
               icon: Icon(Icons.camera_alt),
               onPressed: () async {
-                final _foto = await _picker.getImage(
-                    source: ImageSource.camera, imageQuality: 40);
-                _image = File(_foto.path);
-                setState(() {});
+                ImageSource _fuente;
+                await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Seleccione fuente'),
+                        actions: [
+                          FlatButton(
+                              onPressed: () {
+                                _fuente = ImageSource.gallery;
+                                Navigator.pop(context);
+                              },
+                              child: Text('Galería')),
+                          FlatButton(
+                              onPressed: () {
+                                _fuente = ImageSource.camera;
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cámara'))
+                        ],
+                      );
+                    });
+                try {
+                  final _foto =
+                      await _picker.getImage(source: _fuente, imageQuality: 30);
+                  _image = File(_foto.path) != null ? File(_foto.path) : null;
+                  setState(() {});
+                } catch (e) {
+                  print(e.toString());
+                }
               })
         ],
       ),
       body: SingleChildScrollView(
-        child: _cuerpo(context),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          child: _cuerpo(context),
+        ),
       ),
     );
   }
@@ -74,9 +105,17 @@ class _AddEventPageState extends State<AddEventPage> {
       child: Column(
         children: [
           Container(
+            height: MediaQuery.of(context).size.height * 0.3,
+            width: double.infinity,
             child: _image == null
-                ? Image(image: AssetImage('assets/loading/camera_icon.png'))
-                : Image.file(File(_image.path)),
+                ? Image(
+                    image: AssetImage('assets/loading/camera_icon.png'),
+                    fit: BoxFit.scaleDown,
+                  )
+                : Image.file(
+                    File(_image.path),
+                    fit: BoxFit.scaleDown,
+                  ),
           ),
           SizedBox(
             height: 40,
@@ -93,7 +132,12 @@ class _AddEventPageState extends State<AddEventPage> {
               return null;
             },
           ),
+          SizedBox(
+            height: 30,
+          ),
           TextFormField(
+            maxLines: 100,
+            minLines: 1,
             decoration: InputDecoration(
                 border: OutlineInputBorder(), labelText: 'Contenido'),
             onChanged: (valor) {
@@ -106,6 +150,9 @@ class _AddEventPageState extends State<AddEventPage> {
               return null;
             },
           ),
+          SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

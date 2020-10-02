@@ -12,7 +12,7 @@ class Clinicas {
   Clinicas({
     this.id,
     this.nombre,
-    this.dirrecion,
+    this.direccion,
     this.tel,
     this.latitud,
     this.longitud,
@@ -20,7 +20,7 @@ class Clinicas {
 
   int id;
   String nombre;
-  String dirrecion;
+  String direccion;
   String tel;
   String latitud;
   String longitud;
@@ -28,7 +28,7 @@ class Clinicas {
   factory Clinicas.fromJson(Map<String, dynamic> json) => Clinicas(
         id: int.tryParse(json["id"]),
         nombre: json["nombre"],
-        dirrecion: json["dirrecion"],
+        direccion: json["direccion"],
         tel: json["tel"],
         latitud: json["latitud"],
         longitud: json["longitud"],
@@ -37,7 +37,7 @@ class Clinicas {
   Map<String, dynamic> toJson() => {
         "id": id,
         "nombre": nombre,
-        "dirrecion": dirrecion,
+        "direccion": direccion,
         "tel": tel,
         "latitud": latitud,
         "longitud": longitud,

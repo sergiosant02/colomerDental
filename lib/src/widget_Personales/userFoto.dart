@@ -11,11 +11,11 @@ class UserFoto {
       children: [
         Container(
           color: Colors.blue[800],
-          height: size.height * 0.45,
+          height: size.height * 0.4,
           width: size.width,
         ),
         Positioned(
-          top: size.height * 0.1,
+          top: size.height * 0.03,
           left: size.width * 0.25,
           child: Column(children: [
             Container(

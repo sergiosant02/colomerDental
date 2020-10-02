@@ -19,4 +19,12 @@ class PublicacionesStream {
     publicacionesStreamController.sink
         .add(await _publicacionesProvider.obtenerNoticias());
   }
+
+  deletePublicaciones(NoticiasModel _noticia) async {
+    if (_noticia.fotoStatus) {
+      await _publicacionesProvider.deleteFoto(_noticia);
+    }
+    await _publicacionesProvider.deleteNew(_noticia);
+    obtenerPublicaciones();
+  }
 }

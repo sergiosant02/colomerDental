@@ -46,7 +46,7 @@ class NewsAppear {
                 bottomLeft: Radius.circular(radioCurvatura),
                 bottomRight: Radius.circular(radioCurvatura)),
             child: FadeInImage(
-              placeholder: AssetImage('assets/loading/camera_icon.png'),
+              placeholder: AssetImage('assets/loading/points.gif'),
               image: NetworkImage('http://concoapps.000webhostapp.com/' +
                   _noticiasModel.fotoUrl),
               width: double.infinity,

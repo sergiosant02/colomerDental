@@ -272,6 +272,7 @@ class _LoginPageState extends State<LoginPage> {
         _bandera = true;
         pref.pagePral = '/bottom';
         _guardarDatos(i);
+        print(pref.correo);
         Navigator.pushReplacementNamed(context, '/bottom');
         break;
       } else if (i.correo == _usuarioModelProcess.correo &&

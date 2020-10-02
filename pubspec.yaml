@@ -34,10 +34,20 @@ dependencies:
   rxdart: ^0.22.2
   image_picker:
   direct_select: ^1.0.2+1
+  flutter_map:
+  url_launcher: 
+  map_launcher: any
+  animate_do:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icono/icono.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

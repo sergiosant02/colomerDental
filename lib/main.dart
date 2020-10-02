@@ -2,6 +2,8 @@ import 'package:colomer_dental/src/connect/connection.dart';
 import 'package:colomer_dental/src/models/clinicasModel.dart';
 import 'package:colomer_dental/src/pages/addEvent.dart';
 import 'package:colomer_dental/src/pages/citasPage.dart';
+import 'package:colomer_dental/src/pages/clinicasPage.dart';
+import 'package:colomer_dental/src/pages/datosUsuarioPage.dart';
 import 'package:colomer_dental/src/pages/homePage.dart';
 import 'package:colomer_dental/src/pages/login.dart';
 import 'package:colomer_dental/src/pages/userPage.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
           '/login': (BuildContext cntext) => LoginPage(),
           '/add': (BuildContext cntext) => AddEventPage(),
           '/citas': (BuildContext cntext) => CitasPage(),
+          '/clinicas': (BuildContext cntext) => ClinicasPage(),
+          '/datos': (BuildContext cntext) => DatosUsuarioPage(),
         },
       ),
     );
@@ -56,7 +60,12 @@ class _ButtomAppBarNabState extends State<ButtomAppBarNab> {
   @override
   Widget build(BuildContext context) {
     final pageProvider = Provider.of<ProviderPage>(context);
-    List<Widget> paginas = [HomePage(), CitasPage(), UserPage(), UserPage()];
+    List<Widget> paginas = [
+      HomePage(),
+      CitasPage(),
+      ClinicasPage(),
+      UserPage()
+    ];
     return Scaffold(
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

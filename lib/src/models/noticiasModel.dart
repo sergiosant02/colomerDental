@@ -12,12 +12,14 @@ String noticiasModelToJson(NoticiasModel data) => json.encode(data.toJson());
 class NoticiasModel {
   NoticiasModel({
     this.titulo,
+    this.id,
     this.contenido,
     this.fotoStatus,
     this.fotoUrl = '',
     this.fecha,
   });
 
+  String id;
   String titulo = '';
   String contenido = '';
   bool fotoStatus = false;
@@ -25,6 +27,7 @@ class NoticiasModel {
   String fecha = '';
 
   factory NoticiasModel.fromJson(Map<String, dynamic> json) => NoticiasModel(
+        id: json["id"],
         titulo: json["titulo"],
         contenido: json["contenido"],
         fotoStatus: json["fotoStatus"] == '1' ? true : false,
@@ -33,6 +36,7 @@ class NoticiasModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "id": id,
         "titulo": titulo,
         "contenido": contenido,
         "fotoStatus": fotoStatus == true ? '1' : '0',

@@ -25,12 +25,19 @@ class _UserPageState extends State<UserPage> {
     usermod.fotoStatus = false;
     usermod.nacimiento = pref.nacimiento;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.blue[800],
+      ),
       body: ListView(children: [
         user.userFotoHead(context, usermod),
         if (pref.log) ...[
           ListTile(
             title: Text('Información personal'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed('/datos');
+            },
           ),
           Divider(),
           ListTile(

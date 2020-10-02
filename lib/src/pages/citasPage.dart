@@ -14,12 +14,43 @@ class CitasPage extends StatefulWidget {
 }
 
 class _CitasPageState extends State<CitasPage> {
+  int _clinicaSelect = 0;
   final Utils utils = Utils();
   @override
   Widget build(BuildContext context) {
+    final _dateProvider = Provider.of<ProviderPage>(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          if (_dateProvider.date != null && _clinicaSelect != 0) {
+          } else {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Faltan datos'),
+                    content:
+                        Text('Debe introducir la fecha deseada y la clínica'),
+                    actions: [
+                      FlatButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('Aceptar'))
+                    ],
+                  );
+                });
+          }
+        },
+        label: Text(
+          'Consultar disponibilidad',
+          maxLines: 1,
+        ),
+        shape: StadiumBorder(),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       appBar: AppBar(
-        title: Text('Clínica'),
+        automaticallyImplyLeading: false,
+        title: Text('Rserva de citas'),
         backgroundColor: Colors.blue[600],
       ),
       body: SafeArea(child: _primerCalendar(context)),
@@ -43,9 +74,9 @@ class _CitasPageState extends State<CitasPage> {
   Widget _primerCalendar(BuildContext context) {
     final _dateProvider = Provider.of<ProviderPage>(context);
     final size = MediaQuery.of(context).size;
-    int _clinicaSelect = 0;
     List<String> _clinicasName = [];
-    for (Clinicas i in clinicas) {
+    List clinicas2 = [Clinicas(nombre: 'Seleccione una clínica')] + clinicas;
+    for (Clinicas i in clinicas2) {
       _clinicasName.add(i.nombre);
     }
 
@@ -93,6 +124,9 @@ class _CitasPageState extends State<CitasPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _fecha,
+            SizedBox(
+              height: 20,
+            ),
             DirectSelect(
                 itemExtent: 35.0,
                 selectedIndex: _clinicaSelect,

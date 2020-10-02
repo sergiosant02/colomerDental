@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:colomer_dental/src/fondos/fondoNews.dart';
 import 'package:colomer_dental/src/models/noticiasModel.dart';
 import 'package:colomer_dental/src/stream/streamProvider.dart';
@@ -56,7 +57,9 @@ class _HomePageState extends State<HomePage> {
                             onTap: () => _detalles(context, lista[i]),
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
-                              child: news.newsBox(context, lista[i]),
+                              child: JelloIn(
+                                  duration: Duration(milliseconds: 500 * i),
+                                  child: news.newsBox(context, lista[i])),
                             ),
                           );
                         });
@@ -97,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                               GoogleFonts.galada(fontSize: size.width * 0.15)),
                     ),
                   ]),
-            )
+            ),
           ],
         ),
       ),
@@ -110,29 +113,45 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              title: Text(_noticiasModel.titulo),
-              content: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      _noticiasModel.contenido,
-                      style: TextStyle(color: Colors.black54),
-                    ),
-                    if (_noticiasModel.fotoStatus) ...[
-                      FadeInImage(
-                        height: size.height * 0.5,
-                        width: size.width * 0.9,
-                        placeholder:
-                            AssetImage('assets/loading/progress_icon.gif'),
-                        image: NetworkImage(
-                            'http://concoapps.000webhostapp.com/' +
-                                _noticiasModel.fotoUrl),
-                        fit: BoxFit.scaleDown,
-                      )
-                    ]
-                  ],
-                ),
-              ));
+            title: Text(_noticiasModel.titulo),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _noticiasModel.contenido,
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                  if (_noticiasModel.fotoStatus) ...[
+                    FadeInImage(
+                      height: size.height * 0.5,
+                      width: size.width * 0.9,
+                      placeholder:
+                          AssetImage('assets/loading/progress_icon.gif'),
+                      image: NetworkImage(
+                          'http://concoapps.000webhostapp.com/' +
+                              _noticiasModel.fotoUrl),
+                      fit: BoxFit.scaleDown,
+                    )
+                  ]
+                ],
+              ),
+            ),
+            actions: [
+              pref.correo == 'familiacolomer@colomer.com'
+                  ? FlatButton(
+                      onPressed: () {
+                        _publicacionesStream
+                            .deletePublicaciones(_noticiasModel);
+                        Navigator.pop(context);
+                      },
+                      child: Text('Eliminar'))
+                  : Container(),
+              FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Aceptar')),
+            ],
+          );
         });
   }
 }
